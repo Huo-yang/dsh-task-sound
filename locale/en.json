@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Task completion notifications",
+    "description": "Show a Windows notification when a main session completes; subagent sessions are ignored."
+  }
+}
