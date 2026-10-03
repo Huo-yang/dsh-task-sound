@@ -24,18 +24,24 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-isolated.ps1
 
 `test:notification` 会真实发送一次普通 Windows 通知；是否响铃由 Windows 通知设置决定。
 
-## 安装到 Web Profile
+## 安装
 
-完成隔离验证后再执行：
+从 [GitHub Releases](https://github.com/Huo-yang/dsh-task-sound/releases) 下载 `dsh-task-sound-<版本>.tgz` 和 `SHA256SUMS.txt`，校验后将压缩包直接交给 DSH，无需解压：
 
 ```powershell
-dsh plugin --profile web add D:/CodeSpace/personal/DSH_Plugin/dsh-task-sound
+dsh plugin --profile web add "C:\Downloads\dsh-task-sound-0.1.0.tgz"
 ```
 
 重启 DSH 后生效。卸载：
 
 ```powershell
 dsh plugin --profile web remove dsh-task-sound
+```
+
+开发时也可以把当前源码目录交给 DSH：
+
+```powershell
+dsh plugin --profile web add D:/CodeSpace/personal/DSH_Plugin/dsh-task-sound
 ```
 
 ## 配置
