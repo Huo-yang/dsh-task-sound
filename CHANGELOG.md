@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### 工程 / Project
+
+- 按统一 DSH 插件仓库契约补齐架构、测试、发布文档、Issue 模板和文档链接检查，并停止跟踪可重复生成的 `lib/`。
+- Aligned repository documentation, templates, validation, generated-file handling, and immutable Release automation with the shared DSH plugin repository contract.
+
 ## [0.1.0] - 2026-10-03
 
 ### 功能 / Features

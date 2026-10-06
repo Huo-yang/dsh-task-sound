@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
       - uses: pnpm/action-setup@v4
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
@@ -34,13 +34,8 @@ jobs:
           name: dsh-task-sound-release-assets
           path: dist/*
           if-no-files-found: error
-      - name: Publish or update GitHub Release
+      - name: Publish GitHub Release
         if: github.ref_type == 'tag'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          if gh release view "${{ github.ref_name }}" >/dev/null 2>&1; then
-            gh release upload "${{ github.ref_name }}" dist/* --clobber
-          else
-            gh release create "${{ github.ref_name }}" dist/* --verify-tag --generate-notes --title "dsh-task-sound ${{ github.ref_name }}"
-          fi
+        run: gh release create "${{ github.ref_name }}" dist/* --verify-tag --notes-file "docs/releases/${{ github.ref_name }}.md" --title "dsh-task-sound ${{ github.ref_name }}"

@@ -4,10 +4,11 @@
 
 ## 开发环境 / Development setup
 
-使用 Node.js 22 或更高版本，以及项目固定的 pnpm 11。Use Node.js 22 or later and the pinned pnpm 11 release.
+使用 Node.js 24 或更高版本，以及项目固定的 pnpm 11。Use Node.js 24 or later and the pinned pnpm 11 release.
 
 ```sh
 pnpm install --frozen-lockfile
+pnpm peers check
 pnpm run check
 ```
 
@@ -25,6 +26,12 @@ Keep changes focused, update both READMEs for user-visible changes, and test cha
 ```sh
 pnpm run check
 ```
+
+该命令包含文档链接检查、TypeScript 配置检查、隔离行为测试和构建。详见[测试指南](docs/TESTING.md)。
+
+This command covers documentation links, the configured TypeScript check, isolated behavior tests, and the build. See the [testing guide](docs/TESTING.md).
+
+维护者发布步骤见[发布流程](docs/RELEASING.md)。Release preparation for maintainers is documented in the [release process](docs/RELEASING.md).
 
 ## 许可证 / License
 
