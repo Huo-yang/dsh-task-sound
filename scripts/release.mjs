@@ -18,7 +18,7 @@ await rm(outDir, { recursive: true, force: true })
 await mkdir(outDir, { recursive: true })
 const preview = JSON.parse(await captureNpm(['pack', '--dry-run', '--json', '--ignore-scripts'], root))[0]
 const packedFiles = new Set(preview.files.map(file => file.path))
-for (const required of ['package.json', 'lib/index.js', 'lib/client.js', 'cordis.patch.yml', 'locale/en.json', 'locale/zh.json', 'README.md', 'README.en.md', 'LICENSE', 'CHANGELOG.md']) {
+for (const required of ['package.json', 'lib/index.js', 'lib/client.js', 'cordis.patch.yml', 'locale/en.json', 'locale/zh.json', 'README.md', 'README.en.md', 'LICENSE', 'CHANGELOG.md', 'CONTRIBUTING.md', 'docs/ARCHITECTURE.md', 'docs/TESTING.md', 'docs/RELEASING.md', `docs/releases/${expectedTag}.md`]) {
   assert.ok(packedFiles.has(required), `release package is missing ${required}`)
 }
 assert.ok([...packedFiles].some(file => file.startsWith('docs/')), 'release package is missing docs')
