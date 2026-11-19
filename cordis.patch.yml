@@ -4,3 +4,5 @@
       config:
         enabled: true
         minimumDurationMs: 10000
+        notificationScope: all
+        workspaceIds: []

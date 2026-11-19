@@ -2,12 +2,16 @@
  * @typedef TaskSoundConfig
  * @property {boolean} enabled
  * @property {number} minimumDurationMs
+ * @property {'all'|'workspaces'} notificationScope
+ * @property {string[]} workspaceIds
  */
 
 /** @type {Readonly<TaskSoundConfig>} */
 export const DEFAULT_CONFIG = Object.freeze({
   enabled: true,
   minimumDurationMs: 10_000,
+  notificationScope: 'all',
+  workspaceIds: [],
 })
 
 /**
@@ -17,10 +21,20 @@ export const DEFAULT_CONFIG = Object.freeze({
  */
 export function normalizeConfig(input) {
   const duration = Number(input?.minimumDurationMs)
+  const workspaceIds = Array.isArray(input?.workspaceIds)
+    ? [...new Set(input.workspaceIds.filter(id => typeof id === 'string' && id.trim() !== '').map(id => id.trim()))]
+    : []
   return {
     enabled: input?.enabled !== false,
     minimumDurationMs: Number.isFinite(duration) && duration >= 0 ? Math.floor(duration) : DEFAULT_CONFIG.minimumDurationMs,
+    notificationScope: input?.notificationScope === 'workspaces' ? 'workspaces' : 'all',
+    workspaceIds,
   }
+}
+
+/** @param {TaskSoundConfig} config @param {string|undefined} workspaceId */
+export function includesWorkspace(config, workspaceId) {
+  return config.notificationScope === 'all' || (workspaceId !== undefined && config.workspaceIds.includes(workspaceId))
 }
 
 /**

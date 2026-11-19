@@ -6,6 +6,8 @@ const NAMESPACE = 'task-sound'
 export const Config = z.object({
   enabled: z.boolean().default(DEFAULT_CONFIG.enabled).volatile(),
   minimumDurationMs: z.number().step(1000).min(0).max(86_400_000).default(DEFAULT_CONFIG.minimumDurationMs).volatile(),
+  notificationScope: z.union(['all', 'workspaces']).default(DEFAULT_CONFIG.notificationScope).volatile(),
+  workspaceIds: z.array(z.string()).default(DEFAULT_CONFIG.workspaceIds).volatile(),
 })
 
 /** @param {Record<string, any>} config */

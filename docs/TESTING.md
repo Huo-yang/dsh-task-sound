@@ -18,7 +18,7 @@ The default check validates local Markdown links, runs the configured TypeScript
 | --- | --- |
 | `pnpm run docs:check` | 本地 Markdown 文件、链接与标题锚点 / local Markdown files, links, and heading anchors |
 | `pnpm run typecheck` | 项目 TypeScript 配置；当前不宣称完整 JavaScript 类型检查 / configured TypeScript project, not full JavaScript type checking |
-| `pnpm test` | 主会话过滤、完成原因、时长阈值、去重、标题退回与 Windows 通知调用 / filtering, completion, thresholds, deduplication, title fallback, notification invocation |
+| `pnpm test` | 主会话与工作区过滤、完成原因、时长阈值、去重、标题退回与 Windows 通知调用 / session and workspace filtering, completion, thresholds, deduplication, title fallback, notification invocation |
 | `pnpm run build` | Host 与 Web 客户端生成到 `lib/` / Host and Web client output in `lib/` |
 
 GitHub CI 使用 Node.js 24，在 Windows 与 Ubuntu 上运行同一个 `pnpm run check`。Ubuntu 成功不表示 Linux 支持 Windows 通知。
