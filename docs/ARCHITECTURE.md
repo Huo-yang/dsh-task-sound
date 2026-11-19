@@ -19,8 +19,13 @@ Send a normal Windows notification after an eligible main-session turn completes
 3. `origin === subagent` 或 `delegationDepth > 0` 的会话直接忽略。
 4. 不用 `parentSession` 过滤，因为普通用户分叉也可能具有父会话。
 5. 达到 `minimumDurationMs` 后读取会话标题并触发通知。
+6. 当 `notificationScope === workspaces` 时，从 `workspaceRegistry` 查找包含该会话 ID 的工作区，并仅允许 `workspaceIds` 白名单命中。
 
 The tracker keys timing and deduplication by session and turn. It relies on explicit subagent metadata rather than `parentSession`, which may also be present on ordinary user forks. It observes live events only and does not scan history.
+
+工作区 ID 是 DSH 生成的稳定 UUID，而不是路径或标题。工作区删除后，其登记和会话成员关系从 registry 消失，旧白名单 ID 因此只会失效，不会误匹配后来创建的同名或同路径工作区。未分组会话在白名单模式下不提醒。定时任务沿用其任务会话在 registry 中的实际归属。
+
+Workspace filtering stores stable registry IDs rather than paths or titles. Deleted registrations and ungrouped sessions cannot match whitelist mode; scheduled work follows the actual workspace membership of its task session.
 
 ## Windows 通知 / Windows notification
 
@@ -34,7 +39,7 @@ The notification runs through a hidden non-interactive PowerShell process and Wi
 
 `src/settings.js` 使用 Schemastery 声明 volatile `Config`，并通过 DSH settings 服务执行带 revision 的替换。`src/routes.js` 提供仅供插件客户端使用的状态、保存和测试端点，并限制请求体大小。
 
-浏览器端注册到 `plugins.bundle.config` 插槽，提供启用开关、最短任务时长和测试按钮。插件名称与简介通过 `locale/en.json`、`locale/zh.json` 提供；配置入口简介订阅 DSH locale 服务并随语言变化重新渲染。
+浏览器端注册到 `plugins.bundle.config` 插槽，提供启用开关、最短任务时长、提醒范围、工作区多选和测试按钮。Host 状态端点返回当前 registry 的工作区快照；已删除 ID 在加载时形成待保存清理，并在用户保存配置后移除。插件名称与简介通过 `locale/en.json`、`locale/zh.json` 提供；配置入口简介订阅 DSH locale 服务并随语言变化重新渲染。
 
 The browser client registers with the native plugin configuration slot. Settings are persisted through the DSH settings service, while localized package metadata comes from the exported locale files.
 

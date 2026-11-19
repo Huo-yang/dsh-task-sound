@@ -29,6 +29,7 @@
 - Notify only for main sessions; subagent task sessions with `origin: subagent` or `delegationDepth > 0` are ignored.
 - Notify only for `completed` turns; failed, cancelled, blocked, and unmatched turns are ignored.
 - Require a task duration of at least 10 seconds by default, with a configurable threshold.
+- Notify for all main sessions or only for main sessions in selected workspaces.
 - Show a normal Windows notification whose title is the completed session name and whose body includes elapsed time.
 - Do not play a custom completion sound; Windows notification settings control whether and how it sounds.
 - Provide English and Chinese plugin metadata that follows the DSH language setting.
@@ -71,8 +72,11 @@ After starting `dsh web`, open **Settings → Plugins → Installed → dsh-task
 | --- | --- | --- |
 | Enable completion notifications | On | Disabling it stops notifications |
 | Minimum task duration | 10 seconds | Shorter tasks are ignored; `0` notifies for every successful completion |
+| Notification scope | All main sessions | Can be limited to one or more selected workspaces |
 
 The page also provides a test-notification button. Save changes to apply them immediately. The session name is not configurable; it comes from the DSH session projection when the notification is sent. Plugin-list and configuration-entry descriptions follow the DSH language setting.
+
+The workspace whitelist stores stable DSH workspace IDs. Ungrouped sessions and sessions outside the selection are ignored; scheduled tasks follow the workspace that owns their task session. Deleting a workspace registration cannot accidentally match another workspace, and stale IDs are reported and removed on the next save.
 
 Windows controls the notification sound. If no sound plays, check Windows notification sound settings for the app, system volume, and Focus mode. The plugin does not play a second system sound.
 
@@ -81,6 +85,7 @@ Windows controls the notification sound. If no sound plays, check Windows notifi
 - The plugin observes live events only and does not scan history; resuming an old session does not emit a catch-up notification.
 - Each `session.id + turn` is notified at most once.
 - Ordinary user forks may have a parent session, so `parentSession` alone is not treated as evidence of a subagent.
+- Workspace membership is resolved from the DSH `workspaceRegistry` when the turn completes; deleted registrations and ungrouped sessions do not match whitelist mode.
 - Notification delivery failures are logged and do not alter the turn result.
 - On non-Windows systems, the plugin does not attempt to send a Windows notification.
 

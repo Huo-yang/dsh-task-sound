@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { createTurnTracker } from '../src/tracker.js'
-import { isMainSession, normalizeConfig } from '../src/policy.js'
+import { includesWorkspace, isMainSession, normalizeConfig } from '../src/policy.js'
 
 /** @param {number} turn */
 const completed = turn => ({ type: 'turn/end', data: { turn, reason: { kind: 'completed' } } })
@@ -37,6 +37,29 @@ test('does not confuse an ordinary fork with a subagent', () => {
   assert.equal(isMainSession({ parentSession: 'parent', delegationDepth: 0 }), true)
 })
 
+test('filters completed turns by stable workspace id when whitelist mode is enabled', () => {
+  const calls = []
+  const tracker = createTurnTracker(
+    { minimumDurationMs: 0, notificationScope: 'workspaces', workspaceIds: ['workspace-a'] },
+    { now: () => 1, workspaceIdFor: candidate => candidate.workspaceId, notify: value => calls.push(value) },
+  )
+  for (const candidate of [
+    { ...session(), id: 'selected', workspaceId: 'workspace-a' },
+    { ...session(), id: 'other', workspaceId: 'workspace-b' },
+    { ...session(), id: 'ungrouped' },
+  ]) {
+    tracker.observe(candidate, started(1))
+    tracker.observe(candidate, completed(1))
+  }
+  assert.deepEqual(calls, [{ sessionId: 'selected', title: '会话 selected', turn: 1, durationMs: 0, workspaceId: 'workspace-a' }])
+})
+
+test('workspace scope policy defaults to all and never matches deleted ids', () => {
+  assert.equal(includesWorkspace({ notificationScope: 'all', workspaceIds: [] }, undefined), true)
+  assert.equal(includesWorkspace({ notificationScope: 'workspaces', workspaceIds: ['deleted'] }, undefined), false)
+  assert.equal(includesWorkspace({ notificationScope: 'workspaces', workspaceIds: ['deleted'] }, 'replacement'), false)
+})
+
 test('ignores short, failed, aborted, and unmatched turns', () => {
   let time = 0
   /** @type {Notification[]} */
@@ -65,5 +88,13 @@ test('normalizes invalid configuration', () => {
   assert.deepEqual(normalizeConfig({ enabled: false, minimumDurationMs: -1 }), {
     enabled: false,
     minimumDurationMs: 10_000,
+    notificationScope: 'all',
+    workspaceIds: [],
+  })
+  assert.deepEqual(normalizeConfig({ notificationScope: 'workspaces', workspaceIds: [' a ', 'a', '', 1] }), {
+    enabled: true,
+    minimumDurationMs: 10_000,
+    notificationScope: 'workspaces',
+    workspaceIds: ['a'],
   })
 })

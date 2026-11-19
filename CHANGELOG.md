@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### 功能 / Features
+
+- 新增提醒范围配置：可提醒全部主会话，或仅提醒选中工作区中的主会话；未分组会话在工作区白名单模式下不提醒。
+- 工作区白名单使用 DSH 稳定工作区 ID；已删除工作区不会误匹配其他项目，并会在配置页下次保存时清理。
+- Added an all-sessions or workspace-whitelist notification scope, with safe handling for ungrouped sessions and deleted workspace registrations.
+
 ### 工程 / Project
 
 - 按统一 DSH 插件仓库契约补齐架构、测试、发布文档、Issue 模板和文档链接检查，并停止跟踪可重复生成的 `lib/`。

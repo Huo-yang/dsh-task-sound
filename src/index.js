@@ -3,17 +3,21 @@ import { sendWindowsNotification } from './sound.js'
 import { createTurnTracker } from './tracker.js'
 import { registerRoutes } from './routes.js'
 import { normalizeConfig } from './policy.js'
+import { listWorkspaceOptions, workspaceIdForSession } from './workspaces.js'
 
 /** @typedef {import('@deepseek-ai/dsh-session').Session} Session */
 /** @typedef {import('@deepseek-ai/dsh-session').SessionEvent} SessionEvent */
 
 export const name = 'dsh-task-sound'
-export const inject = ['sessions', 'sessionProjections']
+export const inject = ['sessions', 'sessionProjections', 'workspaceRegistry']
 
 /** @param {import('@deepseek-ai/cordis').Context} ctx @param {Record<string, any>} rawConfig */
 export function apply(ctx, rawConfig) {
   const logger = ctx.logger(name)
   const settings = createTaskSoundSettings(ctx, rawConfig)
+  const workspaces = () => listWorkspaceOptions(ctx.workspaceRegistry)
+  const workspaceIdFor = session => workspaceIdForSession(ctx.workspaceRegistry, session.id)
+  const state = config => ({ config, workspaces: workspaces() })
   const notify = async (details = { sessionId: 'test', title: 'DSH 通知测试', turn: 0, durationMs: 0 }, override, force = false) => {
     const config = override === undefined ? settings.read() : normalizeConfig({ ...settings.read(), ...override })
     if (!force && !config.enabled) return 'disabled'
@@ -28,6 +32,7 @@ export function apply(ctx, rawConfig) {
 
   const tracker = createTurnTracker(() => settings.read(), {
     titleFor: session => ctx.sessionProjections.snapshot(session, ['title']).values.title ?? '',
+    workspaceIdFor,
     notify: details => {
       void notify(details).catch(error => logger.warn(`发送任务完成提醒失败：${error instanceof Error ? error.message : String(error)}`))
     },
@@ -38,8 +43,8 @@ export function apply(ctx, rawConfig) {
     child.effect(() => registerRoutes({
       webServer: child.webServer,
       handlers: {
-        state: { method: 'GET', run: async () => ({ config: settings.read() }) },
-        config: { method: 'POST', run: async payload => ({ config: await settings.update(payload?.config ?? payload) }) },
+        state: { method: 'GET', run: async () => state(settings.read()) },
+        config: { method: 'POST', run: async payload => state(await settings.update(payload?.config ?? payload)) },
         test: { method: 'POST', run: async payload => ({ result: await notify(undefined, payload?.config, true) }) },
       },
     }), 'dsh-task-sound: routes')
@@ -47,6 +52,7 @@ export function apply(ctx, rawConfig) {
 }
 
 export { Config }
-export { DEFAULT_CONFIG, isMainSession, normalizeConfig } from './policy.js'
+export { DEFAULT_CONFIG, includesWorkspace, isMainSession, normalizeConfig } from './policy.js'
 export { sendWindowsNotification } from './sound.js'
 export { createTurnTracker } from './tracker.js'
+export { listWorkspaceOptions, workspaceIdForSession } from './workspaces.js'

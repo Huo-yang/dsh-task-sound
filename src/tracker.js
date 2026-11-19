@@ -1,10 +1,10 @@
-import { isMainSession } from './policy.js'
+import { includesWorkspace, isMainSession } from './policy.js'
 
 /**
  * Stateful turn observer. It deliberately keys state by session and turn so
  * concurrent main sessions cannot interfere with each other.
- * @param {{minimumDurationMs: number}|(() => {minimumDurationMs: number})} config
- * @param {{now?: () => number, titleFor?: (session: any) => string, notify: (details: {sessionId: string, title: string, turn: number, durationMs: number}) => void}} options
+ * @param {{minimumDurationMs: number, notificationScope?: 'all'|'workspaces', workspaceIds?: string[]}|(() => {minimumDurationMs: number, notificationScope?: 'all'|'workspaces', workspaceIds?: string[]})} config
+ * @param {{now?: () => number, titleFor?: (session: any) => string, workspaceIdFor?: (session: any) => string|undefined, notify: (details: {sessionId: string, title: string, turn: number, durationMs: number, workspaceId?: string}) => void}} options
  */
 export function createTurnTracker(config, options) {
   const now = options.now ?? (() => performance.now())
@@ -44,6 +44,8 @@ export function createTurnTracker(config, options) {
       const durationMs = Math.max(0, now() - startedAt)
       const currentConfig = typeof config === 'function' ? config() : config
       if (durationMs < currentConfig.minimumDurationMs) return
+      const workspaceId = options.workspaceIdFor?.(session)
+      if (!includesWorkspace({ notificationScope: 'all', workspaceIds: [], ...currentConfig }, workspaceId)) return
       notified.add(key)
       notifiedOrder.push(key)
       if (notifiedOrder.length > 2_048) {
@@ -52,7 +54,7 @@ export function createTurnTracker(config, options) {
       }
       const compactId = session.id.startsWith('session-') ? session.id.slice('session-'.length) : session.id
       const title = options.titleFor?.(session)?.trim() || `会话 ${compactId.slice(0, 8)}`
-      options.notify({ sessionId: session.id, title, turn, durationMs })
+      options.notify({ sessionId: session.id, title, turn, durationMs, ...(workspaceId === undefined ? {} : { workspaceId }) })
     },
   }
 }
