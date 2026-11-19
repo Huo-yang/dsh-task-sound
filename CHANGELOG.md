@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-20
+
+### 修复 / Fixed
+
+- 修正 bundle 组合层里的 Loader 行名：`name` 改为 npm 包名 `@huo-yang/dsh-task-sound`。行名与包清单的 `name` 不相等时，DSH 的 `dsh.client` 扫描会跳过整个包，浏览器半边永远进不了 `window.__DSH_BOOT__`；Host 半边照常加载，所以故障表现是「插件在跑、插件详情页没有配置」。
+- 修正浏览器半边的模块 id 与配置槽位锚点：两者同样改用 npm 包名，保证客户端 bundle 能注册到 `plugins.bundle.config` 的 `@huo-yang/dsh-task-sound` 单元格。
+- 新增守护测试：`cordis.patch.yml` 的 Loader 行名、客户端模块 id 与 `package.json` 的包名必须一致，改名漏改会在 `pnpm test` 中被挡住。
+- Fixed the Loader row name in the bundle patch layer: it must equal the package manifest `name`, otherwise DSH's `dsh.client` scan skips the package and the browser half never enters `window.__DSH_BOOT__` while the Host half keeps loading — the plugin runs, but its settings page is empty.
+- Fixed the browser module id and the plugin-config slot key to use the npm package name as well.
+- Added regression tests that keep the patch row name, the client module id, and the npm package name in sync.
+
 ## [0.2.1] - 2026-11-20
 
 ### 修复 / Fixed

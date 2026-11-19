@@ -1,6 +1,6 @@
 {
   "name": "@huo-yang/dsh-task-sound",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "description": "Show a Windows notification when a main DSH session completes.",
   "homepage": "https://github.com/Huo-yang/dsh-task-sound#readme",

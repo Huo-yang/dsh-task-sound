@@ -1,6 +1,6 @@
 - insert:
     - id: task-sound
-      name: dsh-task-sound
+      name: "@huo-yang/dsh-task-sound"
       config:
         enabled: true
         minimumDurationMs: 10000
