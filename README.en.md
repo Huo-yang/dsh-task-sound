@@ -7,7 +7,7 @@
 <p align="center">Use the session name as the title and integrate with native DSH plugin settings</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.2.1-orange" alt="Version 0.2.1" />
+  <img src="https://img.shields.io/badge/version-0.2.2-orange" alt="Version 0.2.2" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT" /></a>
   <img src="https://img.shields.io/badge/node-%3E%3D22-brightgreen" alt="Node.js >= 22" />
 </p>
@@ -51,13 +51,13 @@ The plugin uses DSH session events, session projections, configuration, and sett
 The recommended installation source is npm:
 
 ```powershell
-dsh plugin --profile web add @huo-yang/dsh-task-sound@0.2.1
+dsh plugin --profile web add @huo-yang/dsh-task-sound@0.2.2
 ```
 
 Alternatively, download `dsh-task-sound-<version>.tgz` and `SHA256SUMS.txt` from [GitHub Releases](https://github.com/Huo-yang/dsh-task-sound/releases). Verify the checksum, then give the versioned archive directly to DSH without extracting it:
 
 ```powershell
-dsh plugin --profile web add "C:\Downloads\dsh-task-sound-0.2.1.tgz"
+dsh plugin --profile web add "C:\Downloads\dsh-task-sound-0.2.2.tgz"
 ```
 
 Restart DSH after installation.
@@ -110,7 +110,7 @@ pnpm run test:notification
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-isolated.ps1
 ```
 
-Pass `-PluginPath dist/dsh-task-sound-0.2.1.tgz` to verify archive installation and removal in a fresh temporary profile.
+Pass `-PluginPath dist/dsh-task-sound-0.2.2.tgz` to verify archive installation and removal in a fresh temporary profile.
 
 See the [testing guide](docs/TESTING.md) and [release process](docs/RELEASING.md).
 

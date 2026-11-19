@@ -1,3 +1,4 @@
+import { PACKAGE_NAME } from './package-name.js'
 import { discard, getSnapshot, load, save, stage, subscribe, test } from './store.js'
 
 const ARM_INTERVAL_MS = 200
@@ -97,7 +98,9 @@ export function armSettingsSection(ctx) {
     }
     done = true
     const Section = props => React().createElement(TaskSoundSettingsSection, { ...props, locale })
-    dispose = slots.inject('plugins.bundle.config', () => slots.register({ name: 'plugins.bundle.config', key: 'dsh-task-sound' }, Section))
+    // 按包名挂到「已安装」包详情页：DSH 用 bundle 的包名派发这个槽位，
+    // 用插件名（`dsh-task-sound`）注册会永远等不到派发，配置区整块不渲染。
+    dispose = slots.inject('plugins.bundle.config', () => slots.register({ name: 'plugins.bundle.config', key: PACKAGE_NAME }, Section))
   }
   timer = window.setTimeout(attempt, ARM_INTERVAL_MS)
   return () => { done = true; if (timer !== undefined) window.clearTimeout(timer); if (typeof dispose === 'function') dispose() }
