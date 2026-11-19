@@ -2,9 +2,9 @@
 
 [中文 README](../README.md) · [English README](../README.en.md)
 
-正式版本以 `package.json` 版本、`v<version>` Git 标签和同名 GitHub Release 为同一版本来源。发布准备使用并保留 `release/<version>` 分支。已发布标签和资产不可移动、重建或静默覆盖；修复进入新的 patch 版本。
+正式版本以 `package.json` 版本、npm 版本、`v<version>` Git 标签和同名 GitHub Release 为同一版本来源。发布准备使用并保留 `release/<version>` 分支。已发布版本、标签和资产不可移动、重建或静默覆盖；修复进入新的 patch 版本。
 
-The `package.json` version, `v<version>` tag, and GitHub Release are one immutable version identity. Prepare and retain a `release/<version>` branch. Publish fixes as a new patch version rather than moving a tag or replacing an asset.
+The `package.json` version, npm version, `v<version>` tag, and GitHub Release are one immutable version identity. Prepare and retain a `release/<version>` branch. Publish fixes as a new patch version rather than moving a tag or replacing an asset.
 
 ## 发布前 / Before release
 
@@ -45,5 +45,6 @@ The tag workflow is the sole GitHub Release creator. Manual dispatch creates an 
 4. 从下载后的公开 `.tgz` 再次在全新隔离 profile 中安装。
 5. Release 说明写明实际验证的 DSH 版本、覆盖行为、Windows/Ubuntu CI 结果、安装命令和已知限制。
 6. 确认仓库没有未提交的发布修改，且 `release/<version>` 已推送并保留。
+7. 使用公开 GitHub Release 中的 `.tgz` 执行 `npm publish <archive> --access public`，再用 `npm view <包名>@<版本>` 和全新隔离 profile 验证 npm 包。
 
 The authoritative checksum is the one attached to the final GitHub Release. Locally and remotely generated npm archives may differ byte-for-byte even when their contents are equivalent.
