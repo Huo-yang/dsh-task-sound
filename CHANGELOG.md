@@ -10,6 +10,8 @@
 
 ### 工程 / Project
 
+- 放宽安装兼容性：支持 Node.js 22 及以上，不再以开发期 DSH 会话与工作区包的精确版本限制安装；CI 改为验证最低 Node.js 版本。
+- Broadened installation compatibility to Node.js 22+, removed exact development-only DSH session/workspace peer locks, and moved CI to the minimum supported Node.js version.
 - 按统一 DSH 插件仓库契约补齐架构、测试、发布文档、Issue 模板和文档链接检查，并停止跟踪可重复生成的 `lib/`。
 - Aligned repository documentation, templates, validation, generated-file handling, and immutable Release automation with the shared DSH plugin repository contract.
 
