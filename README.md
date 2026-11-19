@@ -7,7 +7,7 @@
 <p align="center">使用会话名作为标题，并融入 DSH 原生插件配置页</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.2.0-orange" alt="Version 0.2.0" />
+  <img src="https://img.shields.io/badge/version-0.2.1-orange" alt="Version 0.2.1" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT" /></a>
   <img src="https://img.shields.io/badge/node-%3E%3D22-brightgreen" alt="Node.js >= 22" />
 </p>
@@ -51,13 +51,13 @@
 推荐直接从 npm 安装：
 
 ```powershell
-dsh plugin --profile web add dsh-task-sound@0.2.0
+dsh plugin --profile web add @huo-yang/dsh-task-sound@0.2.1
 ```
 
 也可以从 [GitHub Releases](https://github.com/Huo-yang/dsh-task-sound/releases) 下载 `dsh-task-sound-<版本>.tgz` 和 `SHA256SUMS.txt`。校验后将版本化压缩包直接交给 DSH，无需解压：
 
 ```powershell
-dsh plugin --profile web add "C:\Downloads\dsh-task-sound-0.2.0.tgz"
+dsh plugin --profile web add "C:\Downloads\dsh-task-sound-0.2.1.tgz"
 ```
 
 安装后重启 DSH。
@@ -110,7 +110,7 @@ pnpm run test:notification
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-isolated.ps1
 ```
 
-发布包可通过 `-PluginPath dist/dsh-task-sound-0.2.0.tgz` 在新的临时 profile 中验证安装与卸载。
+发布包可通过 `-PluginPath dist/dsh-task-sound-0.2.1.tgz` 在新的临时 profile 中验证安装与卸载。
 
 测试细节见[测试指南](docs/TESTING.md)，发布步骤见[发布流程](docs/RELEASING.md)。
 
