@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-20
+
 ### 功能 / Features
 
 - 新增提醒范围配置：可提醒全部主会话，或仅提醒选中工作区中的主会话；未分组会话在工作区白名单模式下不提醒。
@@ -10,6 +12,8 @@
 
 ### 工程 / Project
 
+- 新增 npm 公共发布元数据，并支持通过 npm 包名安装。
+- Added public npm publishing metadata and package-name installation.
 - 放宽安装兼容性：支持 Node.js 22 及以上，不再以开发期 DSH 会话与工作区包的精确版本限制安装；CI 改为验证最低 Node.js 版本。
 - Broadened installation compatibility to Node.js 22+, removed exact development-only DSH session/workspace peer locks, and moved CI to the minimum supported Node.js version.
 - 按统一 DSH 插件仓库契约补齐架构、测试、发布文档、Issue 模板和文档链接检查，并停止跟踪可重复生成的 `lib/`。

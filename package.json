@@ -1,9 +1,20 @@
 {
   "name": "dsh-task-sound",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
   "type": "module",
   "description": "Show a Windows notification when a main DSH session completes.",
+  "homepage": "https://github.com/Huo-yang/dsh-task-sound#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Huo-yang/dsh-task-sound.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Huo-yang/dsh-task-sound/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
