@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
-import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
 import { spawn } from 'node:child_process'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url'
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const outDir = join(root, 'dist')
 const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'))
+const releaseName = pkg.name.slice(pkg.name.lastIndexOf('/') + 1)
 const expectedTag = `v${pkg.version}`
 const requestedTag = process.env.GITHUB_REF_TYPE === 'tag' ? process.env.GITHUB_REF_NAME : process.argv[2]
 
@@ -26,8 +27,9 @@ assert.ok(![...packedFiles].some(file => file.startsWith('src/') || file.startsW
 await runNpm(['pack', '--ignore-scripts', '--pack-destination', 'dist'], root)
 
 const archives = (await readdir(outDir)).filter(name => name.endsWith('.tgz'))
-assert.deepEqual(archives, [`${pkg.name}-${pkg.version}.tgz`])
-const archive = archives[0]
+assert.equal(archives.length, 1, 'release build must create exactly one archive')
+const archive = `${releaseName}-${pkg.version}.tgz`
+if (archives[0] !== archive) await rename(join(outDir, archives[0]), join(outDir, archive))
 const digest = createHash('sha256').update(await readFile(join(outDir, archive))).digest('hex')
 await writeFile(join(outDir, 'SHA256SUMS.txt'), `${digest}  ${archive}\n`, 'utf8')
 await writeFile(join(outDir, 'release-manifest.json'), `${JSON.stringify({ name: pkg.name, version: pkg.version, tag: expectedTag, archive, sha256: digest }, null, 2)}\n`, 'utf8')

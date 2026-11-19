@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-20
+
+### 修复 / Fixed
+
+- 将 npm 包名修正为账号作用域下的 `@huo-yang/dsh-task-sound`，确保公共 registry 可发布和安装。
+- Corrected the npm identity to the account-owned `@huo-yang/dsh-task-sound` scope for public publishing and installation.
+
 ## [0.2.0] - 2026-11-20
 
 ### 功能 / Features
