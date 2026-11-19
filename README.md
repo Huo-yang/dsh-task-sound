@@ -9,7 +9,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/version-0.1.0-orange" alt="Version 0.1.0" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT" /></a>
-  <img src="https://img.shields.io/badge/node-%3E%3D24-brightgreen" alt="Node.js >= 24" />
+  <img src="https://img.shields.io/badge/node-%3E%3D22-brightgreen" alt="Node.js >= 22" />
 </p>
 
 <p align="center"><strong>简体中文</strong> | <a href="README.en.md">English</a></p>
@@ -38,13 +38,13 @@
 
 | 项目 | 当前范围 |
 | --- | --- |
-| DSH | 每个版本实际验证的 DSH 版本和范围记录在对应 [GitHub Release](https://github.com/Huo-yang/dsh-task-sound/releases) 说明中 |
+| DSH | 支持 DSH `0.2` 系列；每个版本实际验证的版本记录在对应 [GitHub Release](https://github.com/Huo-yang/dsh-task-sound/releases) 说明中 |
 | 界面 | DSH Web；配置入口位于原生插件管理页 |
-| Node.js | `>=24`；开发基线为 Node.js 24 |
+| Node.js | `>=22`；CI 使用 Node.js 22 验证最低版本 |
 | 包管理器 | pnpm `11.19.0`，由 `packageManager` 固定 |
 | 操作系统 | 通知功能仅支持 Windows；Windows 与 Ubuntu CI 均执行仓库检查 |
 
-插件使用 DSH 的会话事件、会话投影、配置和设置插槽，不修改 DSH 本体。Ubuntu CI 通过只代表代码检查与构建通过，不表示 Linux 能发送 Windows 通知。实现边界见[架构说明](docs/ARCHITECTURE.md)。
+插件使用 DSH 的会话事件、会话投影、配置和设置插槽，不修改 DSH 本体。DSH 会话与工作区包只作为开发期验证基线，不再以精确 peer 版本限制安装；运行时框架依赖仍保留兼容范围。Ubuntu CI 通过只代表代码检查与构建通过，不表示 Linux 能发送 Windows 通知。实现边界见[架构说明](docs/ARCHITECTURE.md)。
 
 ## 安装
 

@@ -21,9 +21,9 @@ The default check validates local Markdown links, runs the configured TypeScript
 | `pnpm test` | 主会话与工作区过滤、完成原因、时长阈值、去重、标题退回与 Windows 通知调用 / session and workspace filtering, completion, thresholds, deduplication, title fallback, notification invocation |
 | `pnpm run build` | Host 与 Web 客户端生成到 `lib/` / Host and Web client output in `lib/` |
 
-GitHub CI 使用 Node.js 24，在 Windows 与 Ubuntu 上运行同一个 `pnpm run check`。Ubuntu 成功不表示 Linux 支持 Windows 通知。
+GitHub CI 使用最低支持版本 Node.js 22，在 Windows 与 Ubuntu 上运行同一个 `pnpm run check`。Ubuntu 成功不表示 Linux 支持 Windows 通知。
 
-CI runs the same check with Node.js 24 on Windows and Ubuntu. Ubuntu success does not imply that Windows notifications are available on Linux.
+CI runs the same check with the minimum supported Node.js 22 on Windows and Ubuntu. Ubuntu success does not imply that Windows notifications are available on Linux.
 
 ## 隔离 DSH profile 验证 / Isolated DSH profile verification
 

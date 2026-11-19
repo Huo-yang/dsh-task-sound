@@ -9,7 +9,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/version-0.1.0-orange" alt="Version 0.1.0" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT" /></a>
-  <img src="https://img.shields.io/badge/node-%3E%3D24-brightgreen" alt="Node.js >= 24" />
+  <img src="https://img.shields.io/badge/node-%3E%3D22-brightgreen" alt="Node.js >= 22" />
 </p>
 
 <p align="center"><a href="README.md">简体中文</a> | <strong>English</strong></p>
@@ -38,13 +38,13 @@
 
 | Item | Current scope |
 | --- | --- |
-| DSH | Each [GitHub Release](https://github.com/Huo-yang/dsh-task-sound/releases) records the DSH version and behavior actually verified for that plugin version |
+| DSH | DSH `0.2` series; each [GitHub Release](https://github.com/Huo-yang/dsh-task-sound/releases) records the version actually verified for that plugin version |
 | Interface | DSH Web, with configuration in the native plugin management page |
-| Node.js | `>=24`; development baseline is Node.js 24 |
+| Node.js | `>=22`; CI validates the minimum on Node.js 22 |
 | Package manager | pnpm `11.19.0`, pinned by `packageManager` |
 | Operating system | Notification delivery supports Windows only; repository checks run on Windows and Ubuntu CI |
 
-The plugin uses DSH session events, session projections, configuration, and settings slots without modifying DSH itself. Passing Ubuntu CI establishes checks and build portability, not Windows notification support on Linux. See the [architecture notes](docs/ARCHITECTURE.md).
+The plugin uses DSH session events, session projections, configuration, and settings slots without modifying DSH itself. DSH session and workspace packages remain pinned as the development baseline but no longer impose exact peer-version locks during installation; runtime framework dependencies retain bounded compatibility ranges. Passing Ubuntu CI establishes checks and build portability, not Windows notification support on Linux. See the [architecture notes](docs/ARCHITECTURE.md).
 
 ## Installation
 

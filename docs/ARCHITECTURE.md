@@ -45,6 +45,9 @@ The browser client registers with the native plugin configuration slot. Settings
 
 ## 数据与安全边界 / Data and safety boundaries
 
+- 安装兼容性面向 DSH `0.2` 系列，不以开发期使用的 `dsh-session`、`dsh-workspace` 精确版本作为 peer 锁；这两个包仍固定在 `devDependencies` 中，作为类型检查和构建基线。Cordis 与 Schemastery 是插件运行框架依赖，继续使用兼容范围。
+- Installation targets the DSH `0.2` series without turning the exact development versions of `dsh-session` and `dsh-workspace` into peer locks. Those packages stay pinned in `devDependencies` as the type-check and build baseline, while the runtime Cordis and Schemastery framework dependencies retain compatible ranges.
+
 - 插件不创建独立数据目录，不读取历史会话日志，也不修改 DSH 本体。
 - 配置由当前 DSH profile 管理。
 - 通知失败只写日志，不改变会话或回合状态。
