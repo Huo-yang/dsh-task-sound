@@ -117,7 +117,7 @@ See the [testing guide](docs/TESTING.md) and [release process](docs/RELEASING.md
 ## Uninstall
 
 ```powershell
-dsh plugin --profile web remove dsh-task-sound
+dsh plugin --profile web remove @huo-yang/dsh-task-sound
 ```
 
 Restart DSH after removal. The plugin creates no separate user-data directory; its settings are managed through the DSH profile configuration.

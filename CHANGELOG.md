@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### 文档 / Docs
+
+- 两份 README 与 `scripts/verify-isolated.ps1` 的卸载命令改用包名 `@huo-yang/dsh-task-sound`；`dsh plugin ... remove dsh-task-sound` 会失败（依赖名带作用域）。
+- The uninstall command in both READMEs and `scripts/verify-isolated.ps1` now uses the package name `@huo-yang/dsh-task-sound`; removing by the bare name fails because the profile dependency is scoped.
+
 ## [0.2.2] - 2026-11-20
 
 ### 修复 / Fixed

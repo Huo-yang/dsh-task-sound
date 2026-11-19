@@ -24,7 +24,7 @@ try {
     $dump = & $DshCommand --profile web --dump-config 2>&1 | Out-String
     if ($LASTEXITCODE -ne 0) { throw "Config dump failed with exit code $LASTEXITCODE`n$dump" }
     if ($dump -notmatch 'id:\s*task-sound') { throw 'task-sound row was not found in composed config' }
-    & $DshCommand plugin --profile web remove dsh-task-sound
+    & $DshCommand plugin --profile web remove @huo-yang/dsh-task-sound
     if ($LASTEXITCODE -ne 0) { throw "Plugin removal failed with exit code $LASTEXITCODE" }
     $afterRemoval = & $DshCommand --profile web --dump-config 2>&1 | Out-String
     if ($LASTEXITCODE -ne 0) { throw "Config dump after removal failed with exit code $LASTEXITCODE`n$afterRemoval" }

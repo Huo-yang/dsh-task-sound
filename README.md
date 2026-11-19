@@ -117,7 +117,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-isolated.ps1
 ## 卸载
 
 ```powershell
-dsh plugin --profile web remove dsh-task-sound
+dsh plugin --profile web remove @huo-yang/dsh-task-sound
 ```
 
 卸载后重启 DSH。插件不创建独立用户数据目录；设置由 DSH profile 配置管理。
